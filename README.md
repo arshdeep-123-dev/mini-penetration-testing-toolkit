@@ -342,6 +342,16 @@ Observed:
 
 ---
 
+### Testing Environment Note
+
+The toolkit was tested using DVWA (Damn Vulnerable Web Application) hosted locally through XAMPP to validate SQL Injection and XSS detection.
+
+Since DVWA runs on localhost, it is accessible only from the local testing environment and cannot be scanned from the deployed Render instance.
+
+The deployed application can analyze publicly accessible websites that allow security testing.
+
+---
+
 # 📸 Screenshots
 
 Add screenshots here.

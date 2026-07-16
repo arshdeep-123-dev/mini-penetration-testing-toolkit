@@ -4,14 +4,23 @@ def calculate_risk_score(results):
     issues = []
 
     # SQL Injection
-    if results.get("sql_results"):
-        score += 40
-        issues.append("SQL Injection vulnerability detected")
+    sql_results = results.get("sql_results", [])
+
+    for item in sql_results:
+        if item.get("Status") == "Potential SQL Injection":
+            score += 40
+            issues.append("SQL Injection vulnerability detected")
+            break
+
 
     # XSS
-    if results.get("xss_results"):
-        score += 30
-        issues.append("Cross-Site Scripting (XSS) detected")
+    xss_results = results.get("xss_results", [])
+
+    for item in xss_results:
+        if item.get("Status") in ["Potential XSS", "XSS Detected"]:
+            score += 30
+            issues.append("Cross-Site Scripting (XSS) detected")
+            break
 
 
     # Security Headers
@@ -20,37 +29,55 @@ def calculate_risk_score(results):
     missing_headers = {
         "X-Frame-Options":
             "Clickjacking protection missing",
+
         "Content-Security-Policy":
             "Content Security Policy missing",
+
         "Strict-Transport-Security":
             "HTTPS enforcement missing",
+
         "X-Content-Type-Options":
             "MIME sniffing protection missing"
     }
 
+
     for header, message in missing_headers.items():
+
         if header not in headers:
             score += 5
             issues.append(message)
-            
-            
-    # SSL issue
+
+
+    # SSL Check
     ssl = results.get("ssl_result", {})
-    if ssl.get("Status") != "Valid ✅":
+
+    ssl_status = ssl.get("Status")
+
+
+    if ssl_status == "Not Enabled ❌":
         score += 10
         issues.append("SSL certificate issue")
 
-     # Limit score
+
+    # Ignore timeout/error cases
+    # Error does not equal vulnerability
+
+
+    # Maximum score
     if score > 100:
         score = 100
+
 
     # Risk Level
     if score >= 70:
         level = "High Risk 🔴"
+
     elif score >= 40:
         level = "Medium Risk 🟠"
+
     elif score > 0:
         level = "Low Risk 🟡"
+
     else:
         level = "Secure 🟢"
 

@@ -289,7 +289,17 @@ def scan_sql(url, session):
 
 
     except requests.exceptions.Timeout:
-        return [{"Error": "Request timed out while scanning the target."}]
+        return [
+            {
+                "Error":
+                "Request timed out while scanning the target."
+            }
+        ]
 
-    except requests.exceptions.RequestException as e:
-        return [{"Error": str(e)}]
+    except requests.exceptions.RequestException:
+        return [
+            {
+                "Error":
+                "Unable to connect to target."
+            }
+        ]

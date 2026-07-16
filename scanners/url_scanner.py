@@ -40,8 +40,9 @@ def scan_url(url):
 
         result["Missing Headers"] = ", ".join(missing) if missing else "None"
 
-    except Exception as e:
-
-        result["Error"] = str(e)
+    except Exception:
+        return {
+            "Error": "Target could not be reached or connection timed out."
+        }
 
     return result

@@ -49,8 +49,8 @@ def check_ssl(url):
             "Days Remaining": days_left
         }
 
-    except Exception as e:
+    except Exception:
         return {
             "Status": "Error ❌",
-            "Reason": str(e)
+            "Reason": "SSL connection timed out."
         }

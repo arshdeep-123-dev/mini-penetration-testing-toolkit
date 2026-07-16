@@ -45,14 +45,33 @@ def login_to_dvwa(session, base_url="http://localhost/dvwa/"):
     user_token = token["value"] if token else ""
 
     security_data = {
-        "security": "low",
-        "seclev_submit": "Submit",
-        "user_token": user_token
-    }
+    "security": "low",
+    "seclev_submit": "Submit",
+    "user_token": user_token
+}
+    response = session.post(
+        security_url,
+        data=security_data,
+        allow_redirects=True
+    )
+    
+    print(response.url)
+    print("low" in response.text)
 
-    session.post(security_url, data=security_data)
+    security_response = session.post(
+        security_url,
+        data=security_data
+    )
+    
+    print(session.cookies.get_dict())
 
-    print("Security set to LOW")
+
+    # Verify security level
+    if "currently:" in security_response.text:
+        print("Security set to LOW")
+    else:
+        print("Security level verification failed")
+
 
     print("Cookies:", session.cookies.get_dict())
 
