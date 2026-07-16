@@ -16,6 +16,18 @@ This project was developed as part of a Cyber Security academic project to demon
 
 ---
 
+> ## ⚠️ Disclaimer
+>
+> This project has been developed **solely for educational and academic purposes** as part of a cybersecurity learning project.
+>
+> The Mini Penetration Testing Toolkit is intended **only for authorized security testing** on systems and web applications for which you have explicit permission to perform security assessments.
+>
+> **Do not use this tool to scan, test, or attack any website, server, or network without prior authorization.** Unauthorized security testing may violate applicable laws, regulations, or terms of service.
+>
+> The developer assumes **no responsibility or liability** for any misuse of this software. Users are solely responsible for ensuring that all testing is conducted ethically and legally.
+
+---
+
 # ✨ Features
 
 - ✅ URL Scanner
