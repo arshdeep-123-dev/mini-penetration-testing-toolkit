@@ -1,0 +1,99 @@
+body{
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    margin:0;
+}
+
+.container{
+    width:900px;
+    margin:40px auto;
+    background:#1e293b;
+    border-radius:10px;
+    padding:30px;
+}
+
+h1{
+    text-align:center;
+}
+
+p{
+    text-align:center;
+}
+
+form{
+    display:flex;
+    justify-content:center;
+    margin:25px 0;
+}
+
+input{
+    width:70%;
+    padding:12px;
+    border-radius:6px;
+    border:none;
+    margin-right:10px;
+}
+
+button{
+    padding:12px 25px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.card{
+    background:#334155;
+    padding:20px;
+    margin-top:25px;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th,
+td{
+    padding:10px;
+    border-bottom:1px solid #475569;
+    text-align:left;
+}
+
+.badge{
+    padding:5px 10px;
+    border-radius:5px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.good{
+    background:#16a34a;
+}
+
+.warning{
+    background:#f59e0b;
+}
+
+.danger{
+    background:#dc2626;
+}
+
+.disclaimer {
+    margin-top: 30px;
+    padding: 15px;
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}

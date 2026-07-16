@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Penetration Testing Toolkit</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Mini Penetration Testing Toolkit</h1>
+        <p>Detect • Analyze • Secure</p>
+        <form method="POST">
+            <input
+            type="text"
+            name="url"
+            placeholder="https://example.com"
+            required>
+            <button>
+                Scan
+            </button>
+        </form>
+
+        {% if url_result %}
+        <div class="card">
+            <h2>URL Scan Result</h2>
+            <table>
+                {% for key, value in url_result.items() %}
+                <tr>
+                    <td><strong>{{ key }}</strong></td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if port_result is not none %}
+        <div class="card">
+            <h2>Open Ports</h2>
+            {% if port_result %}
+            <table>
+                <tr>
+                    <th>Port</th>
+                    <th>Service</th>
+                </tr>
+                {% for port in port_result %}
+                <tr>
+                    <td>{{ port.Port }}</td>
+                    <td>{{ port.Service }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No common open ports detected.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if sql_result is not none %}
+        <div class="card">
+            <h2>SQL Injection Test</h2>
+            {% if sql_result|length == 0 %}
+            <p>✅ No SQL Injection indicators detected.</p>
+            {% elif sql_result[0].get("Error") %}
+            <p>{{ sql_result[0]["Error"] }}</p>
+            {% else %}
+            <table>
+            <tr>
+                <th>Action</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Reason</th>
+            </tr>
+            {% for item in sql_result %}
+            <tr>
+                <td>{{ item["Form Action"] }}</td>
+                <td>{{ item["Method"] }}</td>
+                <td>{{ item["Status"] }}</td>
+                <td>{{ item["Reason"] }}</td>
+            </tr>
+            {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if xss_result is not none %}
+        <div class="card">
+            <h2>XSS Detection</h2>
+            {% if xss_result|length == 0 %}
+            <p>✅ No XSS indicators detected.</p>
+            {% else %}
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                </tr>
+                {% for item in xss_result %}
+                <tr>
+                    <td>{{item["Form Action"]}}</td>
+                    <td>{{item["Method"]}}</td>
+                    <td>{{item["Status"]}}</td>
+                    <td>{{item["Reason"]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if ssl_result is not none %}
+        <div class="card">
+            <h2>SSL Checker</h2>
+            {% if ssl_result %}
+            <table>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ ssl_result["Status"] }}</td>
+                </tr>
+                {% if ssl_result["Issuer"] %}
+                <tr>
+                    <th>Issuer</th>
+                    <td>{{ ssl_result["Issuer"] }}</td>
+                </tr>
+                <tr>
+                    <th>Valid From</th>
+                    <td>{{ ssl_result["Valid From"] }}</td>
+                </tr>
+                <tr>
+                    <th>Expires On</th>
+                    <td>{{ ssl_result["Expires On"] }}</td>
+                </tr>
+                <tr>
+                    <th>Days Remaining</th>
+                    <td>{{ ssl_result["Days Remaining"] }}</td>
+                </tr>
+                {% endif %}
+                {% if ssl_result["Reason"] %}
+                <tr>
+                    <th>Reason</th>
+                    <td>{{ ssl_result["Reason"] }}</td>
+                </tr>
+                {% endif %}
+            </table>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if risk is not none %}
+        <div class="card">
+            <h2>Security Risk Score</h2>
+            <h3>
+                {{ risk.score }}/100
+            </h3>
+            <h4>
+                {{ risk.level }}
+            </h4>
+            <h5>Detected Issues:</h5>
+            <ul>
+            {% for issue in risk.issues %}
+                <li>
+                    {{ issue }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <br> <br>
+
+        <a href="/download-report">
+            <button>
+                Download PDF Report
+            </button>
+        </a>
+
+        <footer class="disclaimer">
+            <p>
+                <strong>Disclaimer:</strong>
+                This toolkit is intended only for authorized security testing and educational purposes.
+                Do not scan systems without explicit permission.
+            </p>
+        </footer>
+
+    </div>
+
+
+</body>
+</html>
